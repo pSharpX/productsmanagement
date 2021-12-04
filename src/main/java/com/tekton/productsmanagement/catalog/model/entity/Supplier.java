@@ -9,15 +9,24 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Supplier implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@Column(nullable = false, unique = true)
+	private String code;
 
 	@Column(nullable = false)
 	private String companyName;
@@ -31,4 +40,5 @@ public class Supplier implements Serializable {
 
 	@Column(nullable = false)
 	private String phone;
+
 }

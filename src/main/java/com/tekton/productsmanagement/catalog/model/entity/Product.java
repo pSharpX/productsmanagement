@@ -15,9 +15,15 @@ import javax.persistence.ManyToOne;
 
 import com.tekton.productsmanagement.common.model.contants.Currency;
 import com.tekton.productsmanagement.common.model.converter.CurrencyConverter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Product implements Serializable {
 

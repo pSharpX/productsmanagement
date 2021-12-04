@@ -23,4 +23,9 @@ public enum Currency {
 	public static Currency getCurrency(String code) {
 		return Arrays.stream(values()).filter(c -> c.getCode().equals(code)).findAny().orElse(NONE);
 	}
+
+	public static Currency getCurrencyById(String id) {
+		return Arrays.stream(values()).filter(c -> c.getId().equals(id)).findAny().orElse(NONE);
+	}
+
 }
