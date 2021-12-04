@@ -1,3 +1,4 @@
+/* (C)2021 */
 package com.tekton.productsmanagement;
 
 import org.springframework.boot.SpringApplication;
@@ -9,5 +10,4 @@ public class ProductsManagementApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ProductsManagementApplication.class, args);
 	}
-
 }
