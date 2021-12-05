@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
-	@Cacheable(value = "category-detail", key = "#code")
+	@Cacheable(value = "category-detail", key = "#code", unless="#result == null")
 	@Query("select c from Category c where c.code = :code")
 	Optional<Category> findByCode(String code);
 

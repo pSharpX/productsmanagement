@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SupplierRepository extends JpaRepository<Supplier, Long> {
 
-	@Cacheable(value = "supplier-detail", key = "#code")
+	@Cacheable(value = "supplier-detail", key = "#code", unless="#result == null")
 	@Query("select s from Supplier s where s.code = :code")
 	Optional<Supplier> findByCode(String code);
 
