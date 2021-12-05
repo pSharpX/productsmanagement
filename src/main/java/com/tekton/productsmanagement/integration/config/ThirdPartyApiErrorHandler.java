@@ -8,16 +8,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tekton.productsmanagement.integration.exception.ThirdPartyApiException;
 import com.tekton.productsmanagement.integration.exception.ThirdPartyTimeoutException;
 import com.tekton.productsmanagement.integration.model.endpoint.ThirdPartyErrorResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.web.client.ResponseErrorHandler;
 
+@Slf4j
 public class ThirdPartyApiErrorHandler implements ResponseErrorHandler {
-
-	private static final Logger LOG = LoggerFactory.getLogger(ThirdPartyApiErrorHandler.class);
 
 	private static final String DEFAULT_ERROR_MESSAGE = "Something went wrong. Try again";
 
@@ -44,7 +42,7 @@ public class ThirdPartyApiErrorHandler implements ResponseErrorHandler {
 			}catch (ThirdPartyApiException ex){
 				throw ex;
 			}catch (Exception ex){
-				LOG.error("Something went wrong when sending request: ", ex);
+				log.error("Something went wrong when sending request: ", ex);
 				throw new ThirdPartyApiException(DEFAULT_ERROR_MESSAGE, status);
 			}
 		}

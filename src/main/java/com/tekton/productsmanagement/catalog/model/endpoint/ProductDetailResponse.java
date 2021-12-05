@@ -4,11 +4,13 @@ package com.tekton.productsmanagement.catalog.model.endpoint;
 import java.math.BigDecimal;
 
 import com.tekton.productsmanagement.common.model.contants.Currency;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 public class ProductDetailResponse {
 
 	private Long id;
@@ -27,11 +29,11 @@ public class ProductDetailResponse {
 
 	private boolean discontinued;
 
-	private Long categoryId;
+	private String categoryCode;
 
 	private String categoryName;
 
-	private Long supplierId;
+	private String supplierCode;
 
 	private String supplierName;
 

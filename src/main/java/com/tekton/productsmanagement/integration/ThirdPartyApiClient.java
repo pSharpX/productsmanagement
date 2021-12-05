@@ -7,10 +7,9 @@ import java.util.Objects;
 
 import com.tekton.productsmanagement.integration.config.ThirdPartyApiClientProperties;
 import com.tekton.productsmanagement.integration.model.constants.ThirdPartyApiEndpoint;
+import com.tekton.productsmanagement.integration.model.endpoint.ProductStockResponse;
 import com.tekton.productsmanagement.integration.util.ThirdPartyApiUtils;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import org.springframework.http.HttpMethod;
 import org.springframework.http.RequestEntity;
@@ -21,18 +20,12 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 public class ThirdPartyApiClient {
 
-	private static final Logger LOG = LoggerFactory.getLogger(ThirdPartyApiClient.class);
-
 	private final ThirdPartyApiClientProperties properties;
 
 	private final RestTemplate restTemplate;
 
-	private <I, O> O handle(HttpMethod method, ThirdPartyApiEndpoint endpoint, I requestBody, Class<O> responseClass){
-		return handle(method, endpoint, null, null, requestBody, responseClass);
-	}
-
-	private <I, O> O handle(HttpMethod method, ThirdPartyApiEndpoint endpoint, Map<String, Object> pathParams, I requestBody, Class<O> responseClass){
-		return handle(method, endpoint, null, pathParams, requestBody, responseClass);
+	public ProductStockResponse getProductStockDetail() {
+		return handle(HttpMethod.GET, ThirdPartyApiEndpoint.DETAIL_SERVICE, null, ProductStockResponse.class);
 	}
 
 	private <O> O handle(HttpMethod method, ThirdPartyApiEndpoint endpoint, Map<String, Object> pathParams, Class<O> responseClass){

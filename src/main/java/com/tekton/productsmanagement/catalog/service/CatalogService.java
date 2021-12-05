@@ -36,6 +36,8 @@ public class CatalogService {
 
 	private final ProductRepository productRepository;
 
+	private final GetProductDetailService productDetailService;
+
 	public void create(CreateProductRequest productRequest) {
 		this.productRepository.save(Product
 				.builder()
@@ -57,7 +59,7 @@ public class CatalogService {
 	}
 
 	public ProductDetailResponse findProductById(Long productId){
-		return new ProductDetailResponse();
+		return this.productDetailService.getProductDetail(productId);
 	}
 
 	@Cacheable("category-list")
