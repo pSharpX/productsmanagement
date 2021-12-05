@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import com.tekton.productsmanagement.integration.config.ThirdPartyApiClientProperties;
 import com.tekton.productsmanagement.integration.model.constants.ThirdPartyApiEndpoint;
+import com.tekton.productsmanagement.integration.model.endpoint.ProductStockRequest;
 import com.tekton.productsmanagement.integration.model.endpoint.ProductStockResponse;
 import com.tekton.productsmanagement.integration.util.ThirdPartyApiUtils;
 import lombok.RequiredArgsConstructor;
@@ -24,12 +25,12 @@ public class ThirdPartyApiClient {
 
 	private final RestTemplate restTemplate;
 
-	public ProductStockResponse getProductStockDetail() {
-		return handle(HttpMethod.GET, ThirdPartyApiEndpoint.DETAIL_SERVICE, null, ProductStockResponse.class);
+	public ProductStockResponse getProductStockDetail(ProductStockRequest request) {
+		return handle(HttpMethod.GET, ThirdPartyApiEndpoint.DETAIL_SERVICE, request, ProductStockResponse.class);
 	}
 
-	private <O> O handle(HttpMethod method, ThirdPartyApiEndpoint endpoint, Map<String, Object> pathParams, Class<O> responseClass){
-		return handle(method, endpoint, null, pathParams, null, responseClass);
+	private <I, O> O handle(HttpMethod method, ThirdPartyApiEndpoint endpoint, I request, Class<O> responseClass){
+		return handle(method, endpoint, null, null, request, responseClass);
 	}
 
 	private <I, O> O handle(HttpMethod method, ThirdPartyApiEndpoint endpoint, MultiValueMap<String, String> queryParams, Map<String, Object> pathParams, I requestBody, Class<O> responseClass) {
