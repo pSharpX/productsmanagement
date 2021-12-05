@@ -1,10 +1,10 @@
+/* (C)2021 */
 package com.tekton.productsmanagement.aop;
 
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.Objects;
 import java.util.Optional;
 
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ import org.aspectj.lang.annotation.Pointcut;
 public class LoggingAspect {
 
 	@Pointcut(
-			"within(com.tekton.productsmanagement.catalog.repository..*) || within(com.tekton.productsmanagement.catalog.service..*) || within(com.tekton.productsmanagement.catalog.resource..*)"
+			"within(com.tekton.productsmanagement.catalog.repository..*) || within(com.tekton.productsmanagement.catalog.service..*) || within(com.tekton.productsmanagement.catalog.resource..*) || within(com.tekton.productsmanagement.integration.client..*)"
 	)
 	public void monitor() { }
 

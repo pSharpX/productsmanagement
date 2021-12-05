@@ -3,7 +3,7 @@ package com.tekton.productsmanagement.catalog.service;
 
 import com.tekton.productsmanagement.catalog.model.entity.Product;
 import com.tekton.productsmanagement.common.util.Handler;
-import com.tekton.productsmanagement.integration.ThirdPartyApiClient;
+import com.tekton.productsmanagement.integration.client.ThirdPartyApiClient;
 import com.tekton.productsmanagement.integration.model.endpoint.ProductStockRequest;
 import com.tekton.productsmanagement.integration.model.endpoint.ProductStockResponse;
 import lombok.RequiredArgsConstructor;

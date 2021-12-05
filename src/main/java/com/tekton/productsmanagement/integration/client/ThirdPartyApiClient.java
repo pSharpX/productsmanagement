@@ -1,5 +1,5 @@
 /* (C)2021 */
-package com.tekton.productsmanagement.integration;
+package com.tekton.productsmanagement.integration.client;
 
 import java.net.URI;
 import java.util.Map;

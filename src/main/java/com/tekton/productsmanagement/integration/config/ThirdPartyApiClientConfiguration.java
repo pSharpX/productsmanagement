@@ -3,7 +3,7 @@ package com.tekton.productsmanagement.integration.config;
 
 import javax.annotation.PostConstruct;
 
-import com.tekton.productsmanagement.integration.ThirdPartyApiClient;
+import com.tekton.productsmanagement.integration.client.ThirdPartyApiClient;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
