@@ -1,0 +1,57 @@
+version: "3.6"
+
+networks:
+  tekton/in.production: {}
+  tekton/production: {}
+
+services:
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: productsmanagement_database
+    hostname: ${DATABASE_HOSTNAME}
+    labels:
+      com.tekton.productsmanagement.project: "ProductsManagement"
+      com.tekton.productsmanagement.version: "1.0"
+      com.tekton.productsmanagement.author.name: "Christian Rivera"
+      com.tekton.productsmanagement.author.email: "crivera2093@gmail.com"
+      com.tekton.productsmanagement.author.url: "https://gitlab.com/pSharpX"
+      com.tekton.productsmanagement.author.description: "ProductsManagement Application"
+    networks:
+      - tekton/in.production
+    ports:
+        - "5432:5432"
+    environment:
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DATABASE_NAME}
+    volumes:
+      - ./data/db-scripts/:/docker-entrypoint-initdb.d/
+      - ./data/db/:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: psharpx/productsmanagement-api:${TAG}
+    container_name: api_productsmanagement
+    hostname: ${API_HOSTNAME}
+    networks:
+      - tekton/in.production
+    depends_on:
+      - db
+    restart: always
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - DATABASE_HOSTNAME=${DATABASE_HOSTNAME}
+      - DATABASE_PORT=${DATABASE_PORT}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - SPRING_DATASOURCE_USERNAME=${DATABASE_USER}
+      - SPRING_DATASOURCE_PASSWORD=${DATABASE_PASSWORD}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    labels:
+      com.tekton.productsmanagement.project: "ProductsManagement"
+      com.tekton.productsmanagement.version: "1.0"
+      com.tekton.productsmanagement.author.name: "Christian Rivera"
+      com.tekton.productsmanagement.author.email: "crivera2093@gmail.com"
+      com.tekton.productsmanagement.author.url: "https://github.com/pSharpX"
+      com.tekton.productsmanagement.author.description: "ProductsManagement Application"
