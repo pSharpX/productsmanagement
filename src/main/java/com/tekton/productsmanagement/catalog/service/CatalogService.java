@@ -56,6 +56,21 @@ public class CatalogService {
 	}
 
 	public void update(Long productId, CreateProductRequest productRequest) {
+		this.productRepository.save(Product
+				.builder()
+					.id(productId)
+					.name(productRequest.getName())
+					.shortName(productRequest.getShortName())
+					.description(productRequest.getDescription())
+					.currency(Currency.getCurrencyById(productRequest.getCurrency()))
+					.unitPrice(productRequest.getUnitPrice())
+					.unitsInStock(productRequest.getUnitsInStock())
+					.discontinued(productRequest.isDiscontinued())
+					.category(this.categoryRepository.findByCode(productRequest.getCategoryCode())
+							.orElseThrow(() -> new ServiceException(ErrorMessageUtils.CATEGORY_NOT_FOUND)))
+					.supplier(this.supplierRepository.findByCode(productRequest.getSupplierCode())
+							.orElseThrow(() -> new ServiceException(ErrorMessageUtils.SUPPLIER_NOT_FOUND)))
+				.build());
 	}
 
 	public ProductDetailResponse findProductById(Long productId){

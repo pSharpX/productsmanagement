@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/catalog")
 @RequiredArgsConstructor
-public class CatalogResource {
+public class CatalogController {
 
 	private final CatalogService catalogService;
 
