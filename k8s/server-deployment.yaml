@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: productsmanagement-server-deployment
+  labels:
+    app: productsmanagement
+    component: server
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: productsmanagement
+      component: server
+  template:
+    metadata:
+      labels:
+        app: productsmanagement
+        component: server
+    spec:
+      containers:
+        - name: productsmanagement-server
+          image: psharpx/productsmanagement-api:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: prod
+            - name: DATABASE_HOSTNAME
+              value: productsmanagement-database-service
+            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+              value: update
+            - name: DATABASE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: productsmanagement.secret
+                  key: DATABASE_NAME
+            - name: DATABASE_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: productsmanagement.secret
+                  key: DATABASE_PORT
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: productsmanagement.secret
+                  key: DATABASE_USER
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: productsmanagement.secret
+                  key: DATABASE_PASSWORD
+
