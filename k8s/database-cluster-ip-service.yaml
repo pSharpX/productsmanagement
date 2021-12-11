@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: productsmanagement-database-service
+spec:
+  selector:
+    app: productsmanagement
+    component: database
+  type: ClusterIP
+  ports:
+    - port: 5432
+      targetPort: 5432

@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: productsmanagement-database-deployment
+  labels:
+    app: productsmanagement
+    component: database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: productsmanagement
+      component: database
+  template:
+    metadata:
+      labels:
+        app: productsmanagement
+        component: database
+    spec:
+      containers:
+        - name: productsmanagement-database
+          image: postgres:14.1-alpine
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: productsmanagement.secret
+                  key: DATABASE_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: productsmanagement.secret
+                  key: DATABASE_PASSWORD
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: productsmanagement.secret
+                  key: DATABASE_NAME
