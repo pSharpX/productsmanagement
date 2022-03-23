@@ -14,7 +14,7 @@ services:
       com.tekton.productsmanagement.version: "1.0"
       com.tekton.productsmanagement.author.name: "Christian Rivera"
       com.tekton.productsmanagement.author.email: "crivera2093@gmail.com"
-      com.tekton.productsmanagement.author.url: "https://gitlab.com/pSharpX"
+      com.tekton.productsmanagement.author.url: "https://github.com/pSharpX"
       com.tekton.productsmanagement.author.description: "ProductsManagement Application"
     networks:
       - tekton/in.production
