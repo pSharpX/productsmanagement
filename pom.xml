@@ -17,6 +17,8 @@
 	<properties>
 		<java.version>11</java.version>
 		<spotless.version>2.17.0</spotless.version>
+		<docker.registry.username>psharpx</docker.registry.username>
+		<image>docker.io/${docker.registry.username}/${project.artifactId}:${project.version}</image>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -94,6 +96,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
 
@@ -117,6 +120,48 @@
 	<build>
 		<finalName>productsmanagement</finalName>
 		<plugins>
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>3.2.1</version>
+				<configuration>
+					<from>
+						<image>eclipse-temurin:11-jre-alpine</image>
+					</from>
+					<to>
+						<image>${image}</image>
+						<tags>
+							<tag>${project.version}</tag>
+						</tags>
+					</to>
+					<container>
+						<jvmFlags>
+							<jvmFlag>-Xms512m</jvmFlag>
+							<jvmFlag>-Xdebug</jvmFlag>
+						</jvmFlags>
+						<mainClass>com.tekton.productsmanagement.ProductsManagementApplication</mainClass>
+						<args>
+							<MAIN_DIR>tekton</MAIN_DIR>
+						</args>
+						<ports>
+							<port>8080</port>
+						</ports>
+						<environment>
+							<SPRING_PROFILES_ACTIVE>local</SPRING_PROFILES_ACTIVE>
+						</environment>
+						<labels>
+							<com.tekton.project.name>ProductsManagement</com.tekton.project.name>
+							<com.tekton.project.key>productsmanagement</com.tekton.project.key>
+							<com.tekton.project.version>1.0</com.tekton.project.version>
+							<com.tekton.project.description>ProductManagement Application</com.tekton.project.description>
+							<com.tekton.author.name>Christian Rivera</com.tekton.author.name>
+							<com.tekton.author.email>crivera2093@gmail.com</com.tekton.author.email>
+							<com.tekton.author.url>https://github.com/pSharpX</com.tekton.author.url>
+						</labels>
+						<format>OCI</format>
+					</container>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
