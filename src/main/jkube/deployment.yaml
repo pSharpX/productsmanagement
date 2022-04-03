@@ -1,0 +1,50 @@
+spec:
+  selector:
+    matchLabels:
+      app: ${project.artifactId}
+      component: application
+      version: ${project.version}
+  template:
+    metadata:
+      labels:
+        app: ${project.artifactId}
+        component: application
+        version: ${project.version}
+    spec:
+      containers:
+        - env:
+            - name: SPRING_PROFILES_ACTIVE
+              valueFrom:
+                configMapKeyRef:
+                  name: ${project.artifactId}-configmap
+                  key: SPRING_PROFILES_ACTIVE
+            - name: DATABASE_HOSTNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: ${project.artifactId}-configmap
+                  key: DATABASE_HOSTNAME
+            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+              valueFrom:
+                configMapKeyRef:
+                  name: ${project.artifactId}-configmap
+                  key: SPRING_JPA_HIBERNATE_DDL_AUTO
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: ${project.artifactId}-secret
+                  key: DATABASE_USER
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ${project.artifactId}-secret
+                  key: DATABASE_PASSWORD
+            - name: DATABASE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: ${project.artifactId}-configmap
+                  key: DATABASE_NAME
+            - name: DATABASE_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: ${project.artifactId}-configmap
+                  key: DATABASE_PORT

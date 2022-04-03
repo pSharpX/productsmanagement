@@ -19,6 +19,13 @@
 		<spotless.version>2.17.0</spotless.version>
 		<docker.registry.username>psharpx</docker.registry.username>
 		<image>docker.io/${docker.registry.username}/${project.artifactId}:${project.version}</image>
+		<!-- Spring Boot Maven Plugin properties -->
+		<spring-boot.build-image.imageName>${image}</spring-boot.build-image.imageName>
+		<!-- JKube Maven Plugin properties -->
+		<jkube.generator.name>${image}</jkube.generator.name>
+		<jkube.skip.tag>true</jkube.skip.tag>
+		<jkube.build.strategy>jib</jkube.build.strategy>
+		<jkube.debug.port>5005</jkube.debug.port>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -91,7 +98,6 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -137,7 +143,6 @@
 					<container>
 						<jvmFlags>
 							<jvmFlag>-Xms512m</jvmFlag>
-							<jvmFlag>-Xdebug</jvmFlag>
 						</jvmFlags>
 						<mainClass>com.tekton.productsmanagement.ProductsManagementApplication</mainClass>
 						<args>
@@ -177,6 +182,11 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.jkube</groupId>
+				<artifactId>kubernetes-maven-plugin</artifactId>
+				<version>1.7.0</version>
 			</plugin>
 
 			<plugin>
@@ -281,7 +291,7 @@
 										<limit>
 											<counter>LINE</counter>
 											<value>COVEREDRATIO</value>
-											<minimum>0.10</minimum>
+											<minimum>0.00</minimum>
 										</limit>
 									</limits>
 								</rule>
