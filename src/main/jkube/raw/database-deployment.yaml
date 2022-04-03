@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${project.artifactId}-database-deployment
+  labels:
+    app: ${project.artifactId}
+    group: com.tekton
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ${project.artifactId}
+      component: database
+      version: ${project.version}
+  template:
+    metadata:
+      labels:
+        app: ${project.artifactId}
+        component: database
+        version: ${project.version}
+    spec:
+      volumes:
+        - name: database-storage
+          persistentVolumeClaim:
+            claimName: database-persistent-volume-claim
+      containers:
+        - name: productsmanagement-database
+          image: postgres:14.1-alpine
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: database-storage
+              subPath: postgres
+          resources:
+            limits:
+              memory: "1G"
+              cpu: "2"
+            requests:
+              memory: "512M"
+              cpu: "1"
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: ${project.artifactId}-secret
+                  key: DATABASE_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ${project.artifactId}-secret
+                  key: DATABASE_PASSWORD
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: ${project.artifactId}-configmap
+                  key: DATABASE_NAME

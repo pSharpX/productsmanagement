@@ -1,0 +1,9 @@
+spec:
+  selector:
+    app: ${project.artifactId}
+    component: application
+    version: ${project.version}
+  type: NodePort
+  ports:
+      - port: 8080
+        targetPort: 8080

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    jkube.io/git-url: https://github.com/pSharpX/productsmanagement.git
+  labels:
+    app: productsmanagement
+    provider: jkube
+    group: com.tekton
+  name: ${project.artifactId}-configmap
+data:
+  SPRING_PROFILES_ACTIVE: dev
+  SPRING_JPA_HIBERNATE_DDL_AUTO: update
+  DATABASE_HOSTNAME: productsmanagement-database-service
+  DATABASE_NAME: productsmanagement_database
+  DATABASE_PORT: '5432'
+  
