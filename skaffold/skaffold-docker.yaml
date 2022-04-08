@@ -15,6 +15,7 @@ build:
   artifacts:
     - image: psharpx/productsmanagement-api
       context: .
-      jib:
-        type: maven
-        fromImage: eclipse-temurin:11-jre-alpine
+      docker:
+        dockerfile: Dockerfile.dev
+        buildArgs:
+          SPRING_PROFILES_ACTIVE: dev

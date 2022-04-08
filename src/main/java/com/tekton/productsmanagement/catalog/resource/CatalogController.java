@@ -27,7 +27,7 @@ public class CatalogController {
 
 	private final CatalogService catalogService;
 
-	@GetMapping("{id}")
+	@GetMapping("{id:[\\\\d]+}")
 	public ProductDetailResponse get(@PathVariable("id")  Long productId) {
 		return this.catalogService.findProductById(productId);
 	}
@@ -38,7 +38,7 @@ public class CatalogController {
 		this.catalogService.create(productRequest);
 	}
 
-	@PutMapping("{id}")
+	@PutMapping("{id:[\\\\d]+}")
 	@ResponseStatus(HttpStatus.OK)
 	public void update(@PathVariable("id")  Long productId, @Valid @RequestBody CreateProductRequest productRequest){
 		this.catalogService.update(productId, productRequest);
