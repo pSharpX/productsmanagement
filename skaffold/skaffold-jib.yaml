@@ -15,6 +15,6 @@ build:
   artifacts:
     - image: psharpx/productsmanagement-api
       context: .
-      buildpacks:
-        builder: paketobuildpacks/builder:base
-        trustBuilder: true
+      jib:
+        type: maven
+        fromImage: eclipse-temurin:11-jre-alpine
