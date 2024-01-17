@@ -1,0 +1,48 @@
+name: Publish Docker Image
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+env:
+  DOCKER_HUB_USER: ${{ vars.DOCKER_HUB_USER }}
+  DOCKER_IMAGE_NAME: productsmanagement-api
+  # github.repository as <account>/<repo>
+  #IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  docker:
+    name: CI Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ vars.DOCKER_HUB_USER }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ${{ env.DOCKER_HUB_USER }}/${{ env.DOCKER_IMAGE_NAME }}
+          tags: |
+            type=raw,latest
+            type=raw,${{ github.run_number }}
+
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./Dockerfile.dev
+          push: ${{ github.event_name != 'pull_request' }} # Don't push on PR
+          #push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
