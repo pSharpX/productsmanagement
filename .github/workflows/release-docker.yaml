@@ -16,6 +16,7 @@ jobs:
   docker:
     name: CI Release
     runs-on: ubuntu-latest
+    environment: development
 
     steps:
       - name: Check out the repo
