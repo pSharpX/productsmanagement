@@ -2,13 +2,13 @@ name: Publish Docker Image
 
 on:
   push:
-    branches: [ master ]
+    branches: [ develop, master ]
   pull_request:
     branches: [ master ]
 
 env:
   DOCKER_HUB_USER: ${{ vars.DOCKER_HUB_USER }}
-  DOCKER_IMAGE_NAME: productsmanagement-api
+  DOCKER_IMAGE_NAME: productsmanagement
   # github.repository as <account>/<repo>
   #IMAGE_NAME: ${{ github.repository }}
 
