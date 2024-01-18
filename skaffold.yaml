@@ -13,7 +13,7 @@ build:
   local:
     push: false
   artifacts:
-    - image: psharpx/productsmanagement-api
+    - image: psharpx/productsmanagement
       context: .
       buildpacks:
         builder: paketobuildpacks/builder:base

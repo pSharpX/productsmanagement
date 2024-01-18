@@ -32,7 +32,7 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    image: psharpx/productsmanagement-api:${TAG}
+    image: psharpx/productsmanagement:${TAG}
     container_name: api_productsmanagement
     hostname: ${API_HOSTNAME}
     networks:
@@ -43,10 +43,8 @@ services:
       - db
     restart: always
     environment:
-      - SPRING_PROFILES_ACTIVE=prod
-      - DATABASE_HOSTNAME=${DATABASE_HOSTNAME}
-      - DATABASE_PORT=${DATABASE_PORT}
-      - DATABASE_NAME=${DATABASE_NAME}
+      - SPRING_PROFILES_ACTIVE=dev
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://${DATABASE_HOSTNAME}:${DATABASE_PORT}/${DATABASE_NAME}
       - SPRING_DATASOURCE_USERNAME=${DATABASE_USER}
       - SPRING_DATASOURCE_PASSWORD=${DATABASE_PASSWORD}
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
