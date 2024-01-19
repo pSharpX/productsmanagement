@@ -22,8 +22,8 @@ env:
   DOCKER_IMAGE_NAME: productsmanagement
 
 jobs:
-  if: inputs.cloud == 'azure-ps1'
   deploy-on-azure-ps1:
+    if: inputs.cloud == 'azure-ps1'
     name: CD Release on Azure (PS1)
     runs-on: ubuntu-latest
     environment: development
