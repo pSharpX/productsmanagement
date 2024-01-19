@@ -1,0 +1,45 @@
+name: Deploy resources on cloud provider
+
+on:
+  workflow_dispatch:
+    inputs:
+      cloud:
+        description: 'A supported cloud provider our resources will be deployed on'
+        required: true
+        default: 'azure-ps1'
+        type: choice
+        options:
+          - azure-ps1
+          - azure-bicep
+          - azure-ansible
+          - azure-terraform
+          - aws-terraform
+          - digitalocean-terraform
+          - digitalocean-ansible
+
+env:
+  DOCKER_HUB_USER: ${{ vars.DOCKER_HUB_USER }}
+  DOCKER_IMAGE_NAME: productsmanagement
+
+jobs:
+  if: inputs.cloud == 'azure-ps1'
+  deploy-on-azure-ps1:
+    name: CD Release on Azure (PS1)
+    runs-on: ubuntu-latest
+    environment: development
+
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Log in via Az module
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          enable-AzPSSession: true
+
+      - name: Run Azure PowerShell for deployment
+        uses: azure/powershell@v1
+        with:
+          inlineScript: ./cloud/azure/ps1/deploy.ps1
+          azPSVersion: "latest"
