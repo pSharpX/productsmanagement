@@ -44,6 +44,5 @@ jobs:
           context: .
           file: ./Dockerfile.dev
           push: ${{ github.event_name != 'pull_request' }} # Don't push on PR
-          #push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
